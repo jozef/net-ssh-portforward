@@ -191,10 +191,8 @@ sub DESTROY {
 	
 	$self->NEXT::DESTROY(@_);
 	
-	foreach my $pid (@pids) {
-		# sigterm the ssh process
-		kill 15, $pid;
-	}
+	# sigterm the ssh process
+	kill 15, @pids;
 	
 	return;
 }
