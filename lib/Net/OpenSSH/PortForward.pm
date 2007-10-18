@@ -4,7 +4,7 @@ package Net::OpenSSH::PortForward;
 
 Net::OpenSSH::PortForward - do port forwarding using openssh
 
-=head SYNOPSIS
+=head1 SYNOPSIS
 
 	use Net::OpenSSH::PortForward;
 	
@@ -29,6 +29,8 @@ Will fork and exec 'ssh -L ...'. Remembering the pids for later clean up.
 
 use warnings;
 use strict;
+
+our $VERSION = '0.01';
 
 use base 'Class::Accessor::Fast';
 
