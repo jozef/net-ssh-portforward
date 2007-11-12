@@ -5,6 +5,6 @@ use warnings;
 
 use Test::More tests => 1;
 BEGIN {
-	use_ok('Net::OpenSSH::PortForward');
+	use_ok('Net::SSH::PortForward');
 };
 

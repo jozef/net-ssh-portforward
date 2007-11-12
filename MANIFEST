@@ -2,5 +2,5 @@ Changes
 Makefile.PL
 MANIFEST
 README
-t/01_Net-OpenSSH-PortForward.t
-lib/Net/OpenSSH/PortForward.pm
+t/01_Net-SSH-PortForward.t
+lib/Net/SSH/PortForward.pm

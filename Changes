@@ -1,4 +1,4 @@
-Revision history for Perl extension Net::OpenSSH::PortForward.
+Revision history for Perl extension Net::SSH::PortForward.
 
 0.01  Thu Oct 18 17:38:13 2007
 	- initial version

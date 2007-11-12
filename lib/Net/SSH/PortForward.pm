@@ -1,14 +1,14 @@
-package Net::OpenSSH::PortForward;
+package Net::SSH::PortForward;
 
 =head1 NAME
 
-Net::OpenSSH::PortForward - do port forwarding using openssh
+Net::SSH::PortForward - do port forwarding using SSH
 
 =head1 SYNOPSIS
 
-	use Net::OpenSSH::PortForward;
+	use Net::SSH::PortForward;
 	
-	$port_forward = Net::OpenSSH::PortForward->new(
+	$port_forward = Net::SSH::PortForward->new(
 		'ssh_host'  => 'common_host',
 		'username'  => 'common_username',
 	);
@@ -21,7 +21,7 @@ Net::OpenSSH::PortForward - do port forwarding using openssh
 
 =head1 DESCRIPTION
 
-Used to do (local for the moment) port forwarding using OpenSSH ssh command.
+Used to do (local for the moment) port forwarding using SSH ssh command.
 
 Will fork and exec 'ssh -L ...'. Remembering the pids for later clean up.
 
