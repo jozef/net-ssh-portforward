@@ -2,7 +2,7 @@ package Net::SSH::PortForward;
 
 =head1 NAME
 
-Net::SSH::PortForward - do port forwarding using SSH
+Net::SSH::PortForward - do port forwarding using ssh
 
 =head1 SYNOPSIS
 
@@ -21,7 +21,7 @@ Net::SSH::PortForward - do port forwarding using SSH
 
 =head1 DESCRIPTION
 
-Used to do (local for the moment) port forwarding using SSH ssh command.
+Used to do (local for the moment) port forwarding using ssh command.
 
 Will fork and exec 'ssh -L ...'. Remembering the pids for later clean up.
 
@@ -35,6 +35,7 @@ our $VERSION = '0.01';
 use base 'Class::Accessor::Fast';
 
 use Carp::Clan;
+use String::ShellQuote qw( shell_quote );
 
 =head1 PROPERTIES
 
@@ -100,7 +101,7 @@ sub new {
 	my $self = shift->SUPER::new({ @_ });
 	
 	# defaults
-	$self->ssh_port(22) if not defined $self->ssh_port;
+	$self->ssh_port(22)              if not defined $self->ssh_port;
 	$self->bind_address('127.0.0.1') if not defined $self->bind_address;
 	
 	return $self;
@@ -143,19 +144,15 @@ sub local {
 	croak 'pass host port' if not defined $host_port;
 	croak 'pass username'  if not defined $username;
 
-	my $cmd =
-		'ssh -L '
-		.$bind_address
-		.':'.$local_port
-		.':'.$host
-		.':'.$host_port
-		.' -l '.$username
-		.' '.$ssh_host
-		.' -p '.$ssh_port
-		.' -N'
-		.' 2>&1'
+	my @cmd =
+		'ssh', '-L',
+		$bind_address.':'.$local_port.':'.$host.':'.$host_port,
+		'-l', $username,
+		$ssh_host,
+		'-p', $ssh_port
+		'-N',
 	;
-	print STDERR '+ '.$cmd."\n" if $ENV{'IN_DEBUG_MODE'};
+	print STDERR '+ ', @cmd > 1 ? shell_quote(@cmd) : @cmd ,"\n" if $ENV{'IN_DEBUG_MODE'};
 
 	my $pid = open(my $ssh_pipe, "-|");
 	die 'fork failed' if not defined $pid;
