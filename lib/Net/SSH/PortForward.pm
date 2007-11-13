@@ -2,7 +2,7 @@ package Net::SSH::PortForward;
 
 =head1 NAME
 
-Net::SSH::PortForward - do port forwarding using ssh
+Net::SSH::PortForward - do port forwarding using openssh
 
 =head1 SYNOPSIS
 
@@ -144,14 +144,14 @@ sub local {
 	croak 'pass host port' if not defined $host_port;
 	croak 'pass username'  if not defined $username;
 
-	my @cmd =
+	my @cmd = (
 		'ssh', '-L',
 		$bind_address.':'.$local_port.':'.$host.':'.$host_port,
 		'-l', $username,
 		$ssh_host,
-		'-p', $ssh_port
+		'-p', $ssh_port,
 		'-N',
-	;
+	);
 	print STDERR '+ ', @cmd > 1 ? shell_quote(@cmd) : @cmd ,"\n" if $ENV{'IN_DEBUG_MODE'};
 
 	my $pid = open(my $ssh_pipe, "-|");
@@ -162,8 +162,8 @@ sub local {
 		# redirect stderr to stdout 
 		open STDERR, '>&', \*STDOUT;
 		
-		exec $cmd;
-		# never retturning back...
+		exec @cmd;
+		# never returning back...
 	}
 
 	# add pid to the list for later cleanup
